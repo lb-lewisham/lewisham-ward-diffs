@@ -2,7 +2,7 @@ mapboxgl.accessToken =
   "pk.eyJ1IjoiZ2xhLWdpcyIsImEiOiJjanBvNGh1bncwOTkzNDNueWt5MGU1ZGtiIn0.XFxLdq2dXttcXSXTiREPTA";
 
 const center = [-0.01988431810519735, 51.451668516553084];
-const zoom = 11;
+const zoom = 10;
 
 var before = new mapboxgl.Map({
   container: "before",
@@ -10,6 +10,9 @@ var before = new mapboxgl.Map({
   center: center,
   zoom: zoom,
 });
+
+before.scrollZoom.disable();
+before.addControl(new mapboxgl.NavigationControl());
 
 before.on("load", () => {
   before.addSource("before", {
