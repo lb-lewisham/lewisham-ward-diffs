@@ -13,7 +13,7 @@ var before = new mapboxgl.Map({
 });
 
 before.scrollZoom.disable();
-before.addControl(new mapboxgl.NavigationControl(), 'top-left');
+before.addControl(new mapboxgl.NavigationControl({showCompass: false}), 'top-left');
 
 before.on("load", () => {
   before.addSource("before", {
