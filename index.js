@@ -1,6 +1,7 @@
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZ2xhLWdpcyIsImEiOiJjanBvNGh1bncwOTkzNDNueWt5MGU1ZGtiIn0.XFxLdq2dXttcXSXTiREPTA";
 
+// BOROUGH CENTROID
 const center = [-0.01988431810519735, 51.451668516553084];
 const zoom = 10;
 
@@ -12,7 +13,7 @@ var before = new mapboxgl.Map({
 });
 
 before.scrollZoom.disable();
-before.addControl(new mapboxgl.NavigationControl());
+before.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
 before.on("load", () => {
   before.addSource("before", {
