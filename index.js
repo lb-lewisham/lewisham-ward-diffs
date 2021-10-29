@@ -65,3 +65,6 @@ var options = {
 
 window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
+// HIDE THE BUTTON CREATED BY THE COMPARE PLUGIN
+document.getElementById("close-button").style.visibility = "hidden";
+
