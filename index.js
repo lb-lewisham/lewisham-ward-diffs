@@ -36,6 +36,8 @@ var after = new mapboxgl.Map({
   zoom: zoom,
 });
 
+after.scrollZoom.disable();
+
 after.on("load", () => {
   after.addSource("after", {
     type: "geojson",
