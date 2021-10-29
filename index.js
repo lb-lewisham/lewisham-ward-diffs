@@ -64,10 +64,3 @@ var options = {
 
 window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
-var closeButton = document.getElementById("close-button");
-
-closeButton.addEventListener("click", function (e) {
-  after.getContainer().style.display = "none";
-  window.compare.remove();
-  after.remove();
-});
