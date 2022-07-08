@@ -88,7 +88,7 @@ after.on("load", () => {
 
   after.on('click', 'after-layer', (e) => {
     after.getCanvas().style.cursor = 'pointer';
-    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.name).addTo(after);
+    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.Name).addTo(after);
   });
 
   after.on('mouseenter', 'after-layer', function () {
@@ -116,3 +116,4 @@ window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
 // HIDE THE BUTTON CREATED BY THE COMPARE PLUGIN
 document.getElementById("close-button").style.visibility = "hidden";
+
