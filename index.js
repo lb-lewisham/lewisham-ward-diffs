@@ -13,7 +13,7 @@ var before = new mapboxgl.Map({
 });
 
 before.scrollZoom.disable();
-before.addControl(new mapboxgl.NavigationControl({showCompass: false}), 'top-left');
+before.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-left');
 
 before.on("load", () => {
   before.addSource("before", {
@@ -24,9 +24,34 @@ before.on("load", () => {
 
   before.addLayer({
     id: "before-layer",
-    type: "line",
+    type: "fill",
     source: "before",
+    paint: {
+      'fill-antialias': true,
+      'fill-color': 'rgba(0, 0, 0, 0)',
+      'fill-outline-color': 'rgba(0, 183, 235, 0.8)'
+    }
   });
+
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
+
+  before.on('click', 'before-layer', (e) => {
+    before.getCanvas().style.cursor = 'pointer';
+    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.name).addTo(before);
+  });
+
+  before.on('mouseenter', 'before-layer', function () {
+    before.getCanvas().style.cursor = 'pointer';
+  });
+
+  before.on('mouseleave', 'before-layer', function () {
+    before.getCanvas().style.cursor = '';
+    popup.remove();
+  });
+
 });
 
 var after = new mapboxgl.Map({
@@ -47,12 +72,34 @@ after.on("load", () => {
 
   after.addLayer({
     id: "after-layer",
-    type: "line",
+    type: "fill",
     source: "after",
     paint: {
-      "line-color": "lime",
+      'fill-antialias': true,
+      'fill-color': 'rgba(0, 0, 0, 0)',
+      'fill-outline-color': 'rgba(0, 183, 235, 0.8)'
     },
   });
+
+  const popup = new mapboxgl.Popup({
+    closeButton: false,
+    closeOnClick: false
+  });
+
+  after.on('click', 'after-layer', (e) => {
+    after.getCanvas().style.cursor = 'pointer';
+    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.name).addTo(after);
+  });
+
+  after.on('mouseenter', 'after-layer', function () {
+    after.getCanvas().style.cursor = 'pointer';
+  });
+
+  after.on('mouseleave', 'after-layer', function () {
+    after.getCanvas().style.cursor = '';
+    popup.remove();
+  });
+
 });
 
 // Use either of these patterns to select a container for the compare widget
@@ -69,4 +116,3 @@ window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
 // HIDE THE BUTTON CREATED BY THE COMPARE PLUGIN
 document.getElementById("close-button").style.visibility = "hidden";
-
