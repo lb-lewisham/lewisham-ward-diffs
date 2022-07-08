@@ -12,7 +12,7 @@ var before = new mapboxgl.Map({
   zoom: zoom,
 });
 
-before.scrollZoom.disable();
+// before.scrollZoom.disable();
 before.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-left');
 
 before.on("load", () => {
@@ -61,7 +61,7 @@ var after = new mapboxgl.Map({
   zoom: zoom,
 });
 
-after.scrollZoom.disable();
+// after.scrollZoom.disable();
 
 after.on("load", () => {
   after.addSource("after", {
@@ -116,4 +116,3 @@ window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
 // HIDE THE BUTTON CREATED BY THE COMPARE PLUGIN
 document.getElementById("close-button").style.visibility = "hidden";
-
