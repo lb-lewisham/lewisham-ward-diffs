@@ -16,6 +16,7 @@ var before = new mapboxgl.Map({
 before.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'top-left');
 
 before.on("load", () => {
+
   before.addSource("before", {
     type: "geojson",
     data:
@@ -38,18 +39,39 @@ before.on("load", () => {
     closeOnClick: false
   });
 
-  before.on('click', 'before-layer', (e) => {
-    before.getCanvas().style.cursor = 'pointer';
-    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.name).addTo(before);
+  let hoveredStateId = null;
+
+  before.on('mousemove', 'before-layer', (e) => {
+    if (e.features.length > 0) {
+      if (hoveredStateId !== null) {
+        before.setFeatureState(
+          { source: 'before', id: hoveredStateId },
+          { hover: false }
+        );
+      }
+      hoveredStateId = e.features[0].id;
+
+      before.getCanvas().style.cursor = 'pointer';
+      popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.name).addTo(before);
+
+      before.setFeatureState(
+        { source: 'before', id: hoveredStateId },
+        { hover: true }
+      );
+    }
   });
 
-  before.on('mouseenter', 'before-layer', function () {
-    before.getCanvas().style.cursor = 'pointer';
-  });
-
-  before.on('mouseleave', 'before-layer', function () {
+  before.on('mouseleave', 'before-layer', () => {
+    if (hoveredStateId !== null) {
+      before.setFeatureState(
+        { source: 'before', id: hoveredStateId },
+        { hover: false }
+      );
+    }
+    hoveredStateId = null;
     before.getCanvas().style.cursor = '';
     popup.remove();
+
   });
 
 });
@@ -86,18 +108,39 @@ after.on("load", () => {
     closeOnClick: false
   });
 
-  after.on('click', 'after-layer', (e) => {
-    after.getCanvas().style.cursor = 'pointer';
-    popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.Name).addTo(after);
+  let hoveredStateId = null;
+
+  after.on('mousemove', 'after-layer', (e) => {
+    if (e.features.length > 0) {
+      if (hoveredStateId !== null) {
+        after.setFeatureState(
+          { source: 'after', id: hoveredStateId },
+          { hover: false }
+        );
+      }
+      hoveredStateId = e.features[0].properties.Name;
+
+      after.getCanvas().style.cursor = 'pointer';
+      popup.setLngLat(e.lngLat).setHTML(e.features[0].properties.Name).addTo(after);
+
+      after.setFeatureState(
+        { source: 'after', id: hoveredStateId },
+        { hover: true }
+      );
+    }
   });
 
-  after.on('mouseenter', 'after-layer', function () {
-    after.getCanvas().style.cursor = 'pointer';
-  });
-
-  after.on('mouseleave', 'after-layer', function () {
+  after.on('mouseleave', 'after-layer', () => {
+    if (hoveredStateId !== null) {
+      after.setFeatureState(
+        { source: 'after', id: hoveredStateId },
+        { hover: false }
+      );
+    }
+    hoveredStateId = null;
     after.getCanvas().style.cursor = '';
     popup.remove();
+
   });
 
 });
@@ -116,3 +159,4 @@ window.compare = new mapboxgl.Compare(before, after, wrapperSelector);
 
 // HIDE THE BUTTON CREATED BY THE COMPARE PLUGIN
 document.getElementById("close-button").style.visibility = "hidden";
+
